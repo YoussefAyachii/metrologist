@@ -34,7 +34,7 @@ def statistics():
     """
     # vales for test
     dates = ["01/02/2022","10/02/2022","01/04/2022","21/04/2022","01/04/2022"]
-    cv_values = [1,2,3,4,5]
+    cv_values = [0.9,0.85,0.81,0.59,0.50]
 
     # 2. data vizualisation: values into barplot
     graph_path_temp = str(PARENT2) +  "/assets/img/"
@@ -46,7 +46,9 @@ def statistics():
         microscope_id,
         dates,
         cv_values,
-        plot_title="Cv values",
+        xlab="date of creation",
+        ylab="cv values",
+        plot_title="cv values",
         save_path=cv_values_barplot_path
         )
 

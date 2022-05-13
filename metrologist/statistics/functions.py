@@ -37,17 +37,24 @@ def get_col_from_db(microscope_id, table_name, colname):
     return values
 
 
-def values_to_barplot(microscope_id, names, values, plot_title, save_path=None):
+def values_to_barplot(
+    microscope_id, xvalues, yvalues, plot_title,
+    xlab=None, ylab=None, save_path=None
+    ):
     """
     This function display a list of values on a horizontal barplot.
 
     Args:
         microscope_id (int):
             Chose from the list of database microscopes.
-        names (list):
+        xvalues (list):
             x_axis list of elements, i.g. date of image aquisition.
-        values (list):
+        yvalues (list):
             list of the chosen parameter values of a specific microscope.
+        xlab (str):
+            x axis label.
+        ylab (str):
+            y axis label.
         plot_title (str):
             plot title
         save_path (str):
@@ -56,7 +63,7 @@ def values_to_barplot(microscope_id, names, values, plot_title, save_path=None):
     """
 
     fig, ax = plt.subplots()
-    ax.barh(names, values)
+    ax.bar(xvalues, yvalues)
 
     # Remove axes splines
     for s in ['top', 'bottom', 'left', 'right']:
@@ -74,19 +81,27 @@ def values_to_barplot(microscope_id, names, values, plot_title, save_path=None):
             linestyle ='-.', linewidth = 0.5,
             alpha = 0.2)
     
-    # Show top values
-    ax.invert_yaxis()
+    # Show oldest to newest images
+    # ax.invert_yaxis()
     
     # Add annotation to bars
+    """
     for i in ax.patches:
         plt.text(i.get_width()+0.2, i.get_y()+0.5,
                 str(round((i.get_width()), 2)),
                 fontsize = 10, fontweight ='bold',
                 color ='grey')
+    """
     
     # Add Plot Title
-    ax.set_title(f"{plot_title}\n microscope id: {microscope_id}",
+    ax.set_title(f"parameter: {plot_title}\n microscope id: {microscope_id}",
                  loc ='center')
+
+    # Add x and y labels (optional)
+    if xlab:
+        plt.xlabel(xlab, fontsize=12, labelpad=10)
+    if ylab:
+        plt.ylabel(ylab, fontsize=12, labelpad=10)
 
     # Save (optional)
     if save_path:
